@@ -9,8 +9,8 @@
 <body class="admin user_list">
 	<h3>社員一覧画面</h3>
 
-	<div class="regist_link">
-		<a th:href="@{/regist/input}">新規社員登録</a>
+	<div class="regist_link" th:if="${session.loginUser != null and session.loginUser.authority==2}">
+		<a th:href="@{/regist/input}" >新規社員登録</a>
 	</div>
 
 	<!--	該当社員が0名の場合-->
@@ -23,7 +23,7 @@
 		</div>
 	</th:block>
 	<!--	該当社員がいる場合-->
-	<table class="list_table" th:if="!${#lists.isEmpty(employees)}">
+	<table class="list_table" th:if="${!#lists.isEmpty(employees)}">
 		<tr>
 			<th>社員ID</th>
 			<th>社員名</th>
@@ -33,8 +33,9 @@
 			<th class="authority">権限</th>
 			<th class="deptName">部署名</th>
 			<th class="button">変更</th>
-			<th class="button">削除</th>
+			<th class="button" th:if="${session.loginUser != null and session.loginUser.authority==2}">削除</th>
 		</tr>
+		
 		<tr th:each="employee: ${employees}">
 			<td th:text="${employee.empId}"></td>
 			<td th:text="${employee.empName}"></td>
@@ -43,22 +44,31 @@
 				この場合はgender=1の場合[男性]、gender=2の場合[女性]と表示される
 			-->
 			<td th:switch="${employee.gender}">
-				<span th:case="1">男性</span> <span th:case="2">女性</span>
+				<span th:case="1">男性</span>
+				<span th:case="2">女性</span>
 			</td>
+			
 			<td th:text="${employee.address}"></td>
 			<td th:text="${#dates.format(employee.birthday, 'yyyy/MM/dd')}"></td>
+			
 			<td th:switch="${employee.authority}">
-				<span th:case="1">一般</span> <span th:case="2">管理者</span>
+				<span th:case="1">一般</span> 
+				<span th:case="2">管理者</span>
 			</td>
+			
 			<td th:text="${employee.deptName}"></td>
+			
 			<td>
-				<form method="get" th:action="@{/update/input}">
+				<form method="get" th:action="@{/update/input}" th:if="${session.loginUser != null and (session.loginUser.authority==2 or session.loginUser.empId==employee.empId)}">
 					<input type="hidden" name="empId" th:value="${employee.empId}" />
 					<input type="submit" value="変更" />
 				</form>
+				
+				<span th:if="${session.loginUser != null and session.loginUser.authority==1 and session.loginUser.empId !=employee.empId}">-</span>
 			</td>
-			<td>
-				<form method="get" th:action="@{/delete/check}">
+			
+			<td th:if="${session.loginUser != null and session.loginUser.authority==2}">
+				<form method="get" th:action="@{/delete/check}" >
 					<input type="hidden" name="empId" th:value="${employee.empId}" />
 					<input type="submit" value="削除" class="delete" />
 				</form>

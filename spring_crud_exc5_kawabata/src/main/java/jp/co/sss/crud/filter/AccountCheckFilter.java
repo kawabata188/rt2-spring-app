@@ -13,13 +13,12 @@ import jakarta.servlet.http.HttpSession;
 import jp.co.sss.crud.bean.EmployeeBean;
 
 @Component
-public class LoginCheckFilter extends HttpFilter {
+public class AccountCheckFilter extends HttpFilter {
 	@Override
-	public void doFilter(
-			HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// リクエストURLを取得
 		String requestURL = request.getRequestURI();
+
 		if (requestURL.indexOf("/html/") != -1 ||
 				requestURL.indexOf("/css/") != -1 ||
 				requestURL.indexOf("/img/") != -1 ||
@@ -27,20 +26,28 @@ public class LoginCheckFilter extends HttpFilter {
 				requestURL.indexOf("/login") != -1 ||
 				requestURL.indexOf("/logout") != -1 ||
 				requestURL.endsWith("/")) {
-
 			chain.doFilter(request, response);
 			return;
 		}
-		//セッション情報を取得 
+
 		HttpSession session = request.getSession(false);
 
 		EmployeeBean loginUser = (EmployeeBean) session.getAttribute("loginUser");
 
 		if (loginUser == null) {
-			response.sendRedirect("/");
+			chain.doFilter(request, response);
 			return;
 		}
-		chain.doFilter(request, response);
 
+		if (loginUser.getAuthority() == 2) {
+			chain.doFilter(request, response);
+			return;
+		}
+
+		if (requestURL.indexOf("/regist") != -1 ||
+				requestURL.indexOf("/delete") != -1) {
+			response.sendRedirect("/list");
+		}
+		chain.doFilter(request, response);
 	}
 }

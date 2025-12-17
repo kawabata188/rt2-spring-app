@@ -27,7 +27,7 @@ public class IndexController {
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public String login(@Valid @ModelAttribute LoginForm loginForm, BindingResult result, Model model,
-			HttpSession sesson) {
+			HttpSession session) {
 		String path = "index";
 
 		if (result.hasErrors()) {
@@ -37,7 +37,7 @@ public class IndexController {
 		LoginResultBean loginResultBean = loginService.execute(loginForm);
 
 		if (loginResultBean.isLogin()) {
-			sesson.setAttribute("loginUser", loginResultBean.getLoginUser());
+			session.setAttribute("loginUser", loginResultBean.getLoginUser());
 			path = "redirect:/list";
 		} else {
 			model.addAttribute("errMessage", loginResultBean.getErrorMsg());
