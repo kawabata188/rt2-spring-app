@@ -18,19 +18,25 @@ public class AccountCheckFilter extends HttpFilter {
 	public void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
 		String requestURL = request.getRequestURI();
+		String contextPath = request.getContextPath();
 
-		if (requestURL.indexOf("/html/") != -1 ||
+		if (requestURL.indexOf("/error/") != -1 ||
+				requestURL.indexOf("/html/") != -1 ||
 				requestURL.indexOf("/css/") != -1 ||
 				requestURL.indexOf("/img/") != -1 ||
 				requestURL.indexOf("/js/") != -1 ||
 				requestURL.indexOf("/login") != -1 ||
 				requestURL.indexOf("/logout") != -1 ||
-				requestURL.endsWith("/")) {
+				requestURL.endsWith(contextPath + "/")) {
 			chain.doFilter(request, response);
 			return;
 		}
 
 		HttpSession session = request.getSession(false);
+		if (session == null) {
+			chain.doFilter(request, response);
+			return;
+		}
 
 		EmployeeBean loginUser = (EmployeeBean) session.getAttribute("loginUser");
 
@@ -44,9 +50,9 @@ public class AccountCheckFilter extends HttpFilter {
 			return;
 		}
 
-		if (requestURL.indexOf("/regist") != -1 ||
-				requestURL.indexOf("/delete") != -1) {
-			response.sendRedirect("/list");
+		if (requestURL.contains("/regist") || requestURL.contains("/delete")) {
+			response.sendRedirect(contextPath + "/");
+			return;
 		}
 		chain.doFilter(request, response);
 	}

@@ -41,6 +41,7 @@ public class IndexController {
 			path = "redirect:/list";
 		} else {
 			model.addAttribute("errMessage", loginResultBean.getErrorMsg());
+			return "index";
 		}
 		return path;
 	}

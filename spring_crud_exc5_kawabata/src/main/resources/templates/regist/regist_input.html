@@ -13,7 +13,14 @@
 			<div class="form">
 				<div class="label">パスワード：</div>
 				<div class="input required">
-					<input type="password" th:field="*{empPass}" />
+					<input type="password" th:field="*{empPass}" id="registPass"/>
+					
+					<div class="error" th:if="${#fields.hasErrors('empPass')}" th:errors="*{empPass}"></div>
+					
+					<label>
+						<input type="checkbox" onclick="togglePassword('registPass')">
+						表示
+					</label>
 				</div>
 			</div>
 			
@@ -21,6 +28,8 @@
 				<div class="label">社員名：</div>
  				<div class="input required">
 					<input type="text" th:field="*{empName}" />
+					
+					<div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
 				</div>
 			</div>
 			
@@ -36,6 +45,8 @@
 				<div class="label">住所：</div>
 				<div class="input required">
 					<input type="text" th:field="*{address}" />
+					
+					<div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
 				</div>
 			</div>
 			
@@ -43,6 +54,8 @@
 				<div class="label">生年月日：(YYYY/MM/DD)</div>
 				<div class="input required">
 					<input type="text" th:field="*{birthday}" />
+					
+					<div class="error" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
 				</div>
 			</div>
 

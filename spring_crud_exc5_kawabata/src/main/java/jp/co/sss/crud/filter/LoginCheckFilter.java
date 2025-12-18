@@ -20,7 +20,8 @@ public class LoginCheckFilter extends HttpFilter {
 			throws IOException, ServletException {
 		// リクエストURLを取得
 		String requestURL = request.getRequestURI();
-		if (requestURL.indexOf("/html/") != -1 ||
+		if (requestURL.indexOf("/error/") != -1 ||
+				requestURL.indexOf("/html/") != -1 ||
 				requestURL.indexOf("/css/") != -1 ||
 				requestURL.indexOf("/img/") != -1 ||
 				requestURL.indexOf("/js/") != -1 ||
@@ -34,10 +35,15 @@ public class LoginCheckFilter extends HttpFilter {
 		//セッション情報を取得 
 		HttpSession session = request.getSession(false);
 
+		if (session == null) {
+			response.sendRedirect(request.getContextPath() + "/");
+			return;
+		}
+
 		EmployeeBean loginUser = (EmployeeBean) session.getAttribute("loginUser");
 
 		if (loginUser == null) {
-			response.sendRedirect("/");
+			response.sendRedirect(request.getContextPath() + "/");
 			return;
 		}
 		chain.doFilter(request, response);

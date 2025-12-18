@@ -28,7 +28,12 @@
 				<div class="login_form">
 				<div class="login_label">パスワード</div>
 				<div class="login_input">
-					<input type="password" th:field="*{empPass}" />
+					<input type="password" th:field="*{empPass}" id="loginPass"/>
+					
+					<label>
+						<input type="checkbox" onclick="togglePassword('loginPass')">
+						表示
+					</label>
 				</div>
 				</div>
 				<div class="login_form">
@@ -41,5 +46,15 @@
 		</div>
 	</div>
 	</th:block>
+	<script>
+	function togglePassword(id){
+	 const input=document.getElementById(id);
+	 if(input.type==="password"){
+		 input.type="text";
+	 }else{
+		 input.type="password";
+	 }
+ }
+ </script>
 </body>
 </html>
