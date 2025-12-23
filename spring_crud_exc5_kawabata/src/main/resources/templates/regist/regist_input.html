@@ -12,11 +12,16 @@
 		<form th:action="@{/regist/check}" method="post" th:object="${employeeForm}">
 			<div class="form">
 				<div class="label">パスワード：</div>
-				<div class="input required">
-					<input type="password" th:field="*{empPass}" id="registPass"/>
+				<div class="input required pass_wrap">
+					<input type="password" th:field="*{empPass}" id="registPass" 
+					th:classappend="${#fields.hasErrors('empPass')}?'error_red'"/>
 					
 					<div class="error" th:if="${#fields.hasErrors('empPass')}" th:errors="*{empPass}"></div>
-					
+<!--					<span class="pass_eye" id="passEye">-->
+<!--						<img class="eye-slash" src="{{asset('images/eye-slash-solid-full.svg')}}">-->
+<!--						<img class="eye-solid" src="{{asset('images/eye-solid-full.svg')}}" style="display: none;">-->
+<!--					</span>-->
+					<span class="pass_count">0/16文字</span>
 					<label>
 						<input type="checkbox" onclick="togglePassword('registPass')">
 						表示
@@ -27,7 +32,7 @@
 			<div class="form">
 				<div class="label">社員名：</div>
  				<div class="input required">
-					<input type="text" th:field="*{empName}" />
+					<input type="text" th:field="*{empName}" th:classappend="${#fields.hasErrors('empName')}?'error_red'"/>
 					
 					<div class="error" th:if="${#fields.hasErrors('empName')}" th:errors="*{empName}"></div>
 				</div>
@@ -44,7 +49,7 @@
 			<div class="form">
 				<div class="label">住所：</div>
 				<div class="input required">
-					<input type="text" th:field="*{address}" />
+					<input type="text" th:field="*{address}" th:classappend="${#fields.hasErrors('address')}?'error_red'"/>
 					
 					<div class="error" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
 				</div>
@@ -53,7 +58,7 @@
 			<div class="form">
 				<div class="label">生年月日：(YYYY/MM/DD)</div>
 				<div class="input required">
-					<input type="text" th:field="*{birthday}" />
+					<input type="text" th:field="*{birthday}" th:classappend="${#fields.hasErrors('birthday')}?'error_red'"/>
 					
 					<div class="error" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></div>
 				</div>
@@ -95,5 +100,23 @@
 			</div>
 		</form>
     </div>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+		$(function(){
+			const max_length=16;
+			$('#registPass').on('input',function(){
+				const length=$(this).val().length;
+				const $count=$(this).siblings('.pass_count');
+				
+				$count.text(length+'/'+max_length+'文字');
+				
+				if(length>max_length){
+					$count.addClass('error');
+				}else{
+					$count.removeClass('error');
+				}
+			});
+		});
+	</script>
 </body>
 </html>

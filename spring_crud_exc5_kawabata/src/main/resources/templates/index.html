@@ -22,18 +22,21 @@
 				<div class="login_form">
 				<div class="login_label">社員ID</div>
 				<div class="login_input">
-					<input type="text" th:field="*{empId}" />
+					<input type="text" th:field="*{empId}" th:classappend="${#fields.hasErrors('empId')}?'error_red'"/>
 				</div>
 				</div>
 				<div class="login_form">
 				<div class="login_label">パスワード</div>
-				<div class="login_input">
-					<input type="password" th:field="*{empPass}" id="loginPass"/>
+				<div class="login_input pass_wrap">
+					<input type="password" th:field="*{empPass}" id="loginPass" 
+					th:classappend="${#fields.hasErrors('empPass')}?'error_red'"/>
 					
 					<label>
 						<input type="checkbox" onclick="togglePassword('loginPass')">
 						表示
 					</label>
+					
+					<span class="pass_count">0/16文字</span>
 				</div>
 				</div>
 				<div class="login_form">
@@ -56,5 +59,26 @@
 	 }
  }
  </script>
+ 
+ 
+ 
+   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script>
+		$(function(){
+			const max_length=16;
+			$('#loginPass').on('input',function(){
+				const length=$(this).val().length;
+				const $count=$(this).siblings('.pass_count');
+				
+				$count.text(length+'/'+max_length+'文字');
+				
+				if(length>max_length){
+					$count.addClass('error');
+				}else{
+					$count.removeClass('error');
+				}
+			});
+		});
+	</script>
 </body>
 </html>

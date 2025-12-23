@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import jp.co.sss.crud.service.DeleteEmployeeService;
 import jp.co.sss.crud.service.SearchForEmployeesByEmpIdService;
@@ -44,9 +45,9 @@ public class DeleteController {
 	 * @return 遷移先のビュー
 	 */
 	@RequestMapping(path = "/delete/complete", method = RequestMethod.POST)
-	public String completeDelete(Integer empId) {
+	public String completeDelete(@RequestParam Integer empId) {
 		deleteEmployeeService.execute(empId);
-		return "redirect:/delete/complete";
+		return "redirect:/list";
 	}
 
 	/**

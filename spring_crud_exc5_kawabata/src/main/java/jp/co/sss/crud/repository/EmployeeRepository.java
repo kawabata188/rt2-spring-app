@@ -44,4 +44,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	 * @return 検索後のリスト
 	 */
 	List<Employee> findByDepartmentOrderByEmpId(Department department);
+
+	List<Employee> findByDeleteFlgOrderByEmpId(Integer deleteFlg);
+
+	Employee findByEmpId(Integer empId);
 }

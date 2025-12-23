@@ -158,3 +158,92 @@ input[type=submit] {
 	color: #FF0000;
 }
 
+/* ---- 権限で色を変える ---- */
+.admin{
+	background-color: #ff7f50;
+}
+
+/* ---- エラー時赤枠 ---- */
+.error_red{
+	border: 2px solid #d9534f;
+}
+
+/* ---- パスワード入力文字カウント ---- */
+.pass_count{
+	font-size: 12px;
+	color: #555;
+	margin-top: 1px;
+}
+
+.pass_count.error{
+	color: red;
+	font-weight: bold;
+}
+
+.pass_wrap{
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+/* ---- レスポンシブ ---- */
+@media screen and (max-width: 768px) {
+
+	/* 全体幅 */
+	.content {
+		flex-direction: column;
+		width: 100%;
+		padding: 0 10px;
+	}
+
+	/* サイドバー */
+	aside {
+		width: 100%;
+	}
+
+	/* メイン */
+	article {
+		width: 100%;
+		padding-left: 0;
+	}
+
+	/* 入力フォーム */
+	div.form {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	div.label {
+		width: 100%;
+		text-align: left;
+		padding-right: 0;
+		height: auto;
+		margin-bottom: 4px;
+	}
+
+	div.input {
+		width: 100%;
+		height: auto;
+	}
+
+	/* ログイン画面 */
+	.login_form {
+		flex-direction: column;
+	}
+
+	div.login_label,
+	div.login_input {
+		width: 100%;
+		text-align: left;
+	}
+
+	/* パスワード周り */
+	.pass_wrap {
+		flex-wrap: wrap;
+		gap: 5px;
+	}
+
+	.pass_count {
+		width: 100%;
+	}
+}

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import jp.co.sss.crud.bean.LoginResultBean;
@@ -19,6 +20,9 @@ public class IndexController {
 
 	@Autowired
 	LoginService loginService;
+
+	@Autowired
+	ServletContext application;
 
 	@RequestMapping(path = "/", method = RequestMethod.GET)
 	public String index(@ModelAttribute LoginForm loginForm) {
@@ -38,6 +42,7 @@ public class IndexController {
 
 		if (loginResultBean.isLogin()) {
 			session.setAttribute("loginUser", loginResultBean.getLoginUser());
+
 			path = "redirect:/list";
 		} else {
 			model.addAttribute("errMessage", loginResultBean.getErrorMsg());

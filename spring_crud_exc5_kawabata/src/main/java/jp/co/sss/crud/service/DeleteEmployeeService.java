@@ -3,6 +3,7 @@ package jp.co.sss.crud.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import jp.co.sss.crud.entity.Employee;
 import jp.co.sss.crud.repository.EmployeeRepository;
 
 /**
@@ -31,7 +32,14 @@ public class DeleteEmployeeService {
 	 */
 	public void execute(Integer forDeleteEmpId) {
 
-		repository.deleteById(forDeleteEmpId);
+		Employee employee = repository.findByEmpId(forDeleteEmpId);
+		if (employee == null) {
+			return;
+		}
+		employee.setDeleteFlg(1);
+		repository.save(employee);
+
+		//		repository.deleteById(forDeleteEmpId);
 
 	}
 
