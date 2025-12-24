@@ -13,6 +13,7 @@ import jp.co.sss.crud.bean.EmployeeBean;
 import jp.co.sss.crud.service.SearchAllEmployeesService;
 import jp.co.sss.crud.service.SearchForEmployeesByDepartmentService;
 import jp.co.sss.crud.service.SearchForEmployeesByEmpNameService;
+import jp.co.sss.crud.util.LoginHistoryManager;
 
 @Controller
 public class ListController {
@@ -25,6 +26,9 @@ public class ListController {
 
 	@Autowired
 	SearchForEmployeesByDepartmentService searchForEmployeesByDepartmentService;
+
+	@Autowired
+	private LoginHistoryManager loginHistoryManager;
 
 	/**
 	 * 社員情報を全件検索した結果を出力
@@ -39,6 +43,8 @@ public class ListController {
 		List<EmployeeBean> allEmployeeList = searchAllEmployeesService.execute();
 
 		model.addAttribute("employees", allEmployeeList);
+
+		model.addAttribute("loginHistoryList", loginHistoryManager.getList());
 		return "list/list";
 	}
 
@@ -75,4 +81,5 @@ public class ListController {
 		model.addAttribute("employees", searchByDepartmentList);
 		return "list/list";
 	}
+
 }

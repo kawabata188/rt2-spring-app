@@ -12,7 +12,8 @@ body {
 	display: flex;
 	flex-direction: row;
 	justify-content:space-between;
-	width: 920px;
+	max-width: 920px;
+	width: 100%;
 	margin: 0px auto;
 }
 
@@ -93,3 +94,33 @@ footer {
 	line-height: 30px;
 }
 
+@media screen and (max-width: 768px) {
+	header{
+		height: auto;
+		padding: 10px;
+	}
+	header.user_info{
+		margin-right: 0;
+		line-height: normal;
+		text-align: center;
+		white-space: normal;
+	}
+	header.title{
+		font-size: 18pt;
+		text-align: center;
+		margin-right: 0;
+	}
+	.content{
+		width: 100%;
+		flex-direction: column;
+		padding: 0 10px;
+		box-sizing: border-box;
+	}
+	aside{
+		width: 100%;
+	}
+	article{
+		width: 100%;
+		padding-left: 0;
+	}
+}

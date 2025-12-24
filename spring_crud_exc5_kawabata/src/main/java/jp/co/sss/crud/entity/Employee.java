@@ -39,8 +39,8 @@ public class Employee {
 	@Column
 	private Integer authority;
 
-	@Column(name = "delete_Flg")
-	private Integer deleteFlg;
+	@Column(name = "delete_Flg", nullable = false)
+	private Integer deleteFlg = 0;
 
 	@ManyToOne
 	@JoinColumn(name = "dept_id", referencedColumnName = "deptId")

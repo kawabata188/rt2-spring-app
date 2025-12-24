@@ -80,6 +80,16 @@
 			</td>
 		</tr>
 	</table>
+	
+	<h4>ログイン履歴</h4>
+
+		<ul>
+  			<li th:each="history : ${loginHistoryList}">
+    			<span th:text="${history.loginTime}"></span>
+    				：
+    			<span th:text="${history.empName}"></span>
+  			</li>
+		</ul>
 </body>
 
 </html>
